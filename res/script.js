@@ -45,5 +45,5 @@ function checkForm(oForm) {
 		alert('Szoba min. 3 karakter');
 		return false;
 	}
-	//return bool
+	return true;
 }
