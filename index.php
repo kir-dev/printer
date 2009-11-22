@@ -32,7 +32,6 @@ $q = $oSql->prepare("SELECT printers.type,
 
 $q->execute();
 $q->bind_result($type, $colors, $model, $desc, $loc, $last_refreshed, $pr_on, $uid, $nick);
-$q->close();
 /**
  * convert timestamp diff to human readable format string
  *
