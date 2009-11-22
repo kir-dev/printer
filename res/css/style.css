@@ -1,0 +1,153 @@
+/* 
+	******************************************************
+		Name: style.css
+		Description: 
+			stylesheet for printer.sch.bme.hu
+		Release-date: 2009-09-01
+		Created by: Márton Gergó
+		Compatible: 
+			FF2, FF3, IE7, Opera 9.63, Chrome 1.0, Safari 4
+	******************************************************
+*/
+
+#page {
+	width: 900px;
+	margin: 0 auto;
+}
+
+body {
+	background: url('../img/bg-body.png');
+	font: 12px verdana,sans-serif;
+	margin: 4px;
+	color: #1f1e21;
+	padding-top: 13px;
+}
+#header {
+	background: url('../img/bg-header.png') left top no-repeat;
+	width: 832px;
+	height: 85px;
+	padding: 20px 56px 0 15px;
+}
+#content {
+	width: 854px;
+	padding: 6px 25px 6px 21px;
+	background: url('../img/bg-content.png') left top repeat-y;
+}
+#footer {
+	width: 869px;
+	padding: 10px 19px 25px 15px;
+	background: url('../img/bg-footer.png') left bottom no-repeat;
+	text-align: center;
+}
+a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #1f1e21;
+}
+a:hover {
+	text-decoration: underline;
+}
+h2 {
+	font-size: 18px;
+	font-style: italic;
+	font-weight: bold;
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+table {
+	border-collapse: collapse;
+}
+th, td {
+	padding: 3px 5px;
+}
+tr {
+	border-bottom: 1px solid #8ba3aa;
+	border-top: 1px solid #8ba3aa;
+	background: #ffffff;
+}
+th {
+	text-align: left;
+	background: #8ba3aa;
+	font-weight: normal;
+	font-style: italic;
+}
+label {
+	width: 100px;
+	/*display: block;
+	float: left;
+	text-align: right;*/
+	padding: 1px 6px 2px 0;
+}
+input, textarea{
+	border: 1px solid #1f1e21;
+}
+input[type="text"] {
+	width: 255px;
+}
+input[type="radio"], input[type="checkbox"] {
+	margin-left: 20px;
+	border: 0px;
+}
+input[type="submit"] {
+	background: #8ba3aa;
+}
+
+#menu {
+	list-style-type: none;
+	float: right;
+	margin: 0;
+}
+#menu li {
+	margin-bottom: 4px;
+}
+#btn-login, #btn-myprinters, #btn-logout, #btn-frontpage {
+	display: block;
+	width: 132px;
+	height: 25px;
+}
+#btn-login {
+	background: url('../img/btn-login.png') left top no-repeat;
+}
+#btn-myprinters {
+	background: url('../img/btn-nyomtatoim.png') left top no-repeat;
+}
+#btn-logout {
+	background: url('../img/btn-logout.png') left top no-repeat;
+}
+#btn-frontpage {
+	background: url('../img/btn-frontpage.png') left top no-repeat;
+}
+
+.box {
+	background: #d3dadc;
+	margin-bottom: 8px;
+}
+.left-corner, .right-corner {
+	width: 4px;
+	height: 4px;
+}
+.right-corner {
+	float: right;
+}
+.top .right-corner {
+	background: url('../img/corner-right-top.png') right top no-repeat;
+}
+.top .left-corner {
+	background: url('../img/corner-left-top.png') left top no-repeat;
+}
+.bottom .right-corner {
+	background: url('../img/corner-right-bottom.png') right bottom no-repeat;
+}
+.bottom .left-corner {
+	background: url('../img/corner-left-bottom.png') left bottom no-repeat;
+}
+.inner-content {
+	padding: 0 8px 6px;
+}
+.iconcaption {
+	padding-left: 5px; 
+	height: 32px; 
+	display: table-cell; 
+	vertical-align: middle;
+	clear: both;
+}
