@@ -1,5 +1,5 @@
 <?php
-if ($_SERVER["SCRIPT_NAME"] != '/index.php') die('Hiba: a fájl direkt hívása nem engedélyezett');
+if (substr($_SERVER["SCRIPT_NAME"], -10) != '/index.php') die('Hiba: a fájl direkt hívása nem engedélyezett');
 
 print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 ?>
