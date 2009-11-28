@@ -51,8 +51,10 @@ function design_Footer() {
 ?>
             </div>
             <div id="footer">
-                <a href="../disclaimer.php">Felhasználási feltételek</a>
-                <br/>
+		<?php 
+		if (strpos($_SERVER['SCRIPT_NAME'], 'disclaimer.php') === false)
+                	print '<a href="../disclaimer.php">Felhasználási feltételek</a><br/>';
+		?>
 		printer.sch.bme.hu | © <?php print date('Y');?> <a href="http://kir-dev.sch.bme.hu">Kir-Dev</a> | design by kir-dev team
             </div>
         </div>
