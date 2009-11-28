@@ -18,7 +18,7 @@ session_start();
 
 //$_SESSION['oUser'] = array("uid" => $sso['uid'], "email" => $sso['email']);
 
-$_SESSION['oUser'] = array("uid" => 'balo', "email" => "balo.software@gmail.com");
+$_SESSION['oUser'] = array("uid" => 'testUser', "email" => "test_user@test.com");
 
 $_SESSION['loginned'] = true;
 
