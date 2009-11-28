@@ -2,6 +2,9 @@
 require_once('logger.php');
 require_once('db.php');
 
+//set timezone (php conf error?)
+date_default_timezone_set('Europe/Berlin');
+
 $oSql = new mysqli($host, $user, $pass, $db);
 
 if (!empty($my->connect_error)) die($my->connect_error);
