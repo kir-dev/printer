@@ -137,7 +137,7 @@ function indexPage() {
 					</div>
 					<div style="margin-left: 10px;">
 						<img src="../res/img/icons/Download-32.png" alt="" align="left" />
-						<div class="iconcaption"><a href="'. ROOT .'Kir-Dev%20Printer%20Client.msi">LETÖLTÉS (win msi)</a></div>
+						<div class="iconcaption"><a href="../Kir-Dev%20Printer%20Client.msi">LETÖLTÉS (win msi)</a></div>
 					</div>
 
 			</div>

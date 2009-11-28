@@ -24,10 +24,9 @@ function design_Header() {
         <script type="text/javascript">
             //<!--
             var navbarConf = {
-                loginLink: '<?php print ROOT; ?>printprofil/trigger.php',
+                loginLink: 'https://printer.sch.bme.hu/printprofil/trigger.php',
                 logoutLink: 'https://idp.sch.bme.hu/opensso/UI/Logout?goto=<?php print ROOT; ?>printprofil/logout.php',
                 loggedIn: <?php print (int)$loggedIn; ?>,
-                /*theme: 'blue',*/
                 support: 36,
                 width: 900,
                 container: 'navbar_container'
@@ -40,7 +39,7 @@ function design_Header() {
             <div id="header">
                 <ul id="menu">
                     <li>
-                        <a href="<?php print ROOT; ?>index.php" id="btn-frontpage"></a>
+                        <a href="../index.php" id="btn-frontpage"></a>
                     </li>
                 </ul>
             </div>

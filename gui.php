@@ -20,7 +20,7 @@ print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://ww
         <script type="text/javascript">
             //<!--
             var navbarConf = {
-                loginLink: '<?php print $root; ?>printprofil/trigger.php',
+                loginLink: 'https://printer.sch.bme.hu/printprofil/trigger.php',
                 logoutLink: 'https://idp.sch.bme.hu/opensso/UI/Logout?goto=<?php print $root; ?>printprofil/logout.php',
                 loggedIn: <?php print (int)$loggedIn; ?>,
                 support: 36,
@@ -61,7 +61,7 @@ print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://ww
 
                                 print '
                                     <tr>
-                                        <td><a href="https://idp.sch.bme.hu:443/profile/show/uid/' . $printer['uid'] . '/">' . $printer['nick'] . '</a></td>
+                                        <td><a href="https://profile.sch.bme.hu/profile/show/uid/' . $printer['uid'] . '/">' . $printer['nick'] . '</a></td>
                                         <td>' . $printer['loc'] . '</td>
                                         <td><div style="width: 150px; overflow: hidden;">' . $printer['model'] . '</div><br /><i>Típus</i>: ' . $type . '<br /><i>Nyomtat</i>: ';
                                         print $printer['colors'].'

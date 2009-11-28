@@ -1,5 +1,5 @@
 <?php
-	define('ROOT', 'https://printer.sch.bme.hu/');
+	define('ROOT', 'http://printer.sch.bme.hu/');
 	//constants.php létrehozása
 	session_start();
 	require_once('printprofil/funct.php');
