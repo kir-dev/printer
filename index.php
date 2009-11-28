@@ -102,6 +102,7 @@ while ( $q->fetch() ) {
         "model" => $model,
         "desc" => nl2br($desc),
         "loc" => $loc,
+	"last_refreshed_ts" => $last_refreshed,
         "last_refreshed" => (int)($last_refreshed / 60)." perce",
         "uid" => $uid,
         "nick" => $nick
@@ -120,6 +121,15 @@ $q->close();
 
 $oSql->close();
 
+//sort offline printers
+//compare function, parameters are printer array
+function cmp($a, $b) {
+	if ($a['last_refreshed_ts'] == $b['last_refreshed_ts']) return 0;
+	
+	return ($a['last_refreshed_ts'] > $b['last_refreshed_ts']) ? 1 : -1;
+}
+uasort($offline_printers, 'cmp');
+
 //set headers
 session_start();
 
@@ -127,7 +137,7 @@ header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 header('Content-type: text/html; charset=utf-8');
 
-$root = 'http://printer.kirdev.sch.bme.hu/';
+$root = 'http://printer.sch.bme.hu/';
 
 $loggedIn = isset($_SESSION['loginned']) && $_SESSION['loginned'] === true && isset($_SESSION['oUser']['uid']);
 

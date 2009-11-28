@@ -14,7 +14,10 @@ function design_Header() {
         <link type="text/css" href="../res/css/style.css" rel="stylesheet" />
         <script src="../res/script.js" type="text/javascript"></script>
         <!-- navbar script include -->
-        <script type="text/javascript" src="http://navbar.kirdev.sch.bme.hu/vir-navbar3.js"></script>
+        <script type="text/javascript">
+               var NavBarProtocol = ((document.location.protocol == "https:") ? "https" : "http");
+               document.write(unescape("%3Cscript src='" + NavBarProtocol + "://idp.sch.bme.hu/navbar/vir-navbar3.js' type='text/javascript'%3E%3C/script%3E"));
+       </script>
     </head>
     <body>
         <!-- navbar config and call -->

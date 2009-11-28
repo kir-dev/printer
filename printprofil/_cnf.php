@@ -30,7 +30,7 @@ if (isset($_SERVER['REMOTE_USER']) && $_SERVER['REMOTE_USER'] != "") {
 $sso['idpCookie'] = 'sunIdentityServerAuthNServer';
 
 //to constants.php
-define('ROOT', 'http://printer.kirdev.sch.bme.hu/');
+define('ROOT', 'http://printer.sch.bme.hu/');
 define('SELF', $_SERVER['PHP_SELF']);
 define('BACK', '<a href="#" onclick="history.back();">vissza</a>');
 

@@ -9,7 +9,10 @@ print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://ww
         <title>printer.sch.bme.hu</title>
         <link type="text/css" href="res/css/style.css" rel="stylesheet" />
         <!-- navbar script include -->
-        <script type="text/javascript" src="http://navbar.kirdev.sch.bme.hu/vir-navbar3.js"></script>
+	<script type="text/javascript">
+		var NavBarProtocol = ((document.location.protocol == "https:") ? "https" : "http");
+		document.write(unescape("%3Cscript src='" + NavBarProtocol + "://idp.sch.bme.hu/navbar/vir-navbar3.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
         <meta http-equiv="refresh" content="180" />
     </head>
     <body>
