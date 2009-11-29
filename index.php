@@ -101,7 +101,7 @@ while ( $q->fetch() ) {
     }
 
     $printer = array("type" => $type,
-        "colors" => $colors,
+        "colors" => $str_colors,
         "model" => $model,
         "desc" => nl2br($desc),
         "loc" => $loc,
