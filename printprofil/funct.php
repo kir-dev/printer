@@ -51,11 +51,16 @@ function design_Footer() {
 ?>
             </div>
             <div id="footer">
-		<?php 
-		if (strpos($_SERVER['SCRIPT_NAME'], 'disclaimer.php') === false)
-                	print '<a href="../disclaimer.php">Felhasználási feltételek</a><br/>';
-		?>
-		printer.sch.bme.hu | © <?php print date('Y');?> <a href="http://kir-dev.sch.bme.hu">Kir-Dev</a> | design by kir-dev team
+                <div style="float: left; width: 180px;"><a href="http://simonyi.bme.hu"><img src="/res/img/banners/simonyi.jpg" alt="Simonyi Károly Szakkollégium" border="0" height="50" /></a></div>
+                <div style="text-align: center; width: 509px; float: left;">
+                    <?php
+                    if (strpos($_SERVER['SCRIPT_NAME'], 'disclaimer.php') === false)
+                            print '<a href="../disclaimer.php">Felhasználási feltételek</a><br/>';
+                    ?>
+                    printer.sch.bme.hu | © <?php print date('Y');?> <a href="http://kir-dev.sch.bme.hu">Kir-Dev</a> | design by kir-dev team
+                </div>
+                <div style="float: right; margin-right: 8px;"><a href="http://kir-dev.sch.bme.hu"><img src="/res/img/banners/kirdev.png" alt="Kir-Dev web developer team" border="0" height="50" /></a></div>
+
             </div>
         </div>
     </body>
