@@ -66,7 +66,7 @@ print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://ww
                                         <td><div style="width: 150px; overflow: hidden;">' . $printer['model'] . '</div><br /><i>Típus</i>: ' . $type . '<br /><i>Nyomtat</i>: ';
                                         print $printer['colors'].'
                                         </td>
-                                        <td><div style="width: 400px; overflow: hidden;">' . nl2br($printer['desc']) . '</div></td>
+                                        <td><div style="width: 400px; overflow: hidden;">' . $printer['desc'] . '</div></td>
                                         <td>' . $printer['last_refreshed'] . '</td>
                                     </tr>';
                             }
@@ -97,7 +97,7 @@ print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://ww
                                     <td><div style="width: 150px; overflow: hidden;">' . $printer['model'] . '</div><br /><i>Típus</i>: ' . $type . '<br /><i>Nyomtat</i>: ';
                                     print $printer['colors'].'
                                     </td>
-                                    <td><div style="width: 400px; overflow: hidden;">' . nl2br($printer['desc']) . '</div></td>
+                                    <td><div style="width: 400px; overflow: hidden;">' . $printer['desc'] . '</div></td>
                                     <td>' . $printer['last_refreshed'] . '</td>
                                 </tr>';
                             }
