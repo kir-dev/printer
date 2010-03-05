@@ -20,8 +20,8 @@ print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://ww
         <script type="text/javascript">
             //<!--
             var navbarConf = {
-                loginLink: 'https://printer.sch.bme.hu/printprofil/trigger.php',
-                logoutLink: 'https://idp.sch.bme.hu/opensso/UI/Logout?goto=<?php print $root; ?>printprofil/logout.php',
+                loginLink: 'https://printer.sch.bme.hu/printprofil/?action=login',
+                logoutLink: 'https://printer.sch.bme.hu/printprofil/?action=logout',
                 loggedIn: <?php print (int)$loggedIn; ?>,
                 support: 36,
                 theme: 'grey',

@@ -1,44 +1,76 @@
 <?php
-require_once('../logger.php');
 require_once('_cnf.php');
 
-if (!isset($_SESSION['loginned']) || $_SESSION['loginned'] !== true || !isset($_SESSION['oUser']['uid'])) // not valid session
-	header('Location: trigger.php');
+//sso stuff --------------------------------
+
+$sso = new openSSO;
+
+// login, logout actions
+if(isset($_GET['action']))
+{
+	if($_GET['action'] == 'login') $sso->logIn();
+	if($_GET['action'] == 'logout') { $sso->logOut();}
+}
+
+//if user isn't logged in go to index
+if ( ! ($sso->isLogin()))
+    header('Location: ' . ROOT);
+
+
+//sso end --------------------------------
 
 header('Content-type: text/html; charset=utf-8');
 
 //set mysql object
 $oSql = new mysqli($host, $user, $pass, $db);
 
-if (!empty($my->connect_error)) die($my->connect_error);
+if (!empty($oSql->connect_error)) die('cannot connect to database');
 
 $oSql->set_charset('utf8');
 
-//init user
+//init user from sso data
 try {
-	$oUser = new clsUser($_SESSION['oUser']['uid'], $_SESSION['oUser']['email']);
+	$oUser = new clsUser($sso->getUserData('user_name'), $sso->getUserData('sso_email'));
 } catch (Exception $e) {
-	die($e->getMessage());
+	die('cannot init user: ' . $e->getMessage());
 }
 
 //load user data from db
 $oUser->loadFromDb($oSql);
 
-if ($oUser->getNick() == '') $oUser->setNick($sso['nick']);
+if ($oUser->getNick() == '') $oUser->setNick($sso->getUserData('sso_nickname'));
 
 $p = isset($_GET['p']) ? $_GET['p'] : '';
 
-switch($p) {
-	case 'addPrinter'		: addPrinter(); break;
-	case 'modifyPrinter'	: modifyPrinter(); break;
-	case 'delPrinter' 		: delPrinter(); break;
-	case 'changeNick'		: changeNick(); break;
-	case 'requestNewAppkey'	: requestNewAppkey(); break;
-	case 'printFaq'				: printFaq(); break;
-	//
-	case 'alldatadel'		: allDataDel(); break;
-	//
-	default					: indexPage();
+try {
+    switch($p) {
+        case 'addPrinter'	: addPrinter(); break;
+        case 'modifyPrinter'	: modifyPrinter(); break;
+        case 'delPrinter' 	: delPrinter(); break;
+        case 'changeNick'	: changeNick(); break;
+        case 'requestNewAppkey'	: requestNewAppkey(); break;
+        case 'printFaq'		: printFaq(); break;
+        //
+        case 'alldatadel'	: allDataDel(); break;
+        //
+        default			: indexPage();
+    }
+} catch (Exception $e) {
+
+    design_Header($sso->isLogin());
+
+    print '
+    <div class="box">
+            <div class="top"><div class="right-corner"></div><div class="left-corner"></div></div>
+            <div class="inner-content">
+                    <h2>Hiba történt!</h2><br/>
+                    Hiba oka: ' . $e->getMessage() . '<br/>
+                    ' . BACK . '
+            </div>
+            <div class="bottom"><div class="right-corner"></div><div class="left-corner"></div></div>
+    </div>';
+
+    design_Footer();
 }
 
 pageUnload();
@@ -53,7 +85,7 @@ function indexPage() {
 
 	//welcome...
 	
-	design_Header();
+	design_Header($sso->isLogin());
 
 	print '<div class="box">
 			<div class="top"><div class="right-corner"></div><div class="left-corner"></div></div>
@@ -161,129 +193,76 @@ function indexPage() {
 function addPrinter() {
 
 	//global
-	global $oUser, $oSql;
+	global $oUser, $oSql, $sso;
 
-	try {
-		if (!isset($_POST['model'])) throw new Exception('Nem kaptam megfelelő POST adatot!');
-		$data = clsPrinter::dataValidate($_POST);
-		
-		//if not registered yet: request appkey and save user
-		if (!$oUser->isRegistered()) {
-			$oUser->requestAppKey();
-			$oUser->saveToDb($oSql);
-		}
-		
-		$newPrinter = new clsPrinter(0, $oUser->getUid(), $data['type'], $data['colors'], $data['model'], $data['desc'], $data['loc']);
-		$oUser->addPrinter($newPrinter, $oSql);
-		
-		pageUnload();
-		
-		header('Location: '.SELF); //if everything went ok
-		
-	} catch (Exception $e) {
+        if (!isset($_POST['model'])) throw new Exception('Nem kaptam megfelelő POST adatot!');
+        $data = clsPrinter::dataValidate($_POST);
 
-		design_Header();
+        //if not registered yet: request appkey and save user
+        if (is_null($oUser->getAppkey())) {
+                $oUser->requestAppKey();
+                $oUser->saveToDb($oSql);
+        }
+
+        $newPrinter = new clsPrinter(0, $oUser->getUid(), $data['type'], $data['colors'], $data['model'], $data['desc'], $data['loc']);
+        $oUser->addPrinter($newPrinter, $oSql);
+
+        pageUnload();
+
+        header('Location: '.SELF); //if everything went ok
 		
-		print '
-		<div class="box">
-			<div class="top"><div class="right-corner"></div><div class="left-corner"></div></div>
-			<div class="inner-content">
-				<h2>Hiba történt!</h2><br/>
-				Hiba oka: ' . $e->getMessage() . '<br/>
-				' . BACK . '
-			</div>
-			<div class="bottom"><div class="right-corner"></div><div class="left-corner"></div></div>
-		</div>';
-			
-		design_Footer();
-	}
 } 
 
 function changeNick() {
 
 	//global
-	global $oUser, $oSql;
+	global $oUser, $oSql, $sso;
 	
-	try {
-		if (!isset($_POST['nick'])) throw new Exception('Nem kaptam megfelelő POST adatot!');
-		
-		$nick = htmlspecialchars($_POST['nick']);
 
-		if (strlen($nick) < 3 || strlen($nick) > 50) throw new Exception('túl rövid vagy túl hosszú név (min 3, max 50 kar.)');
-		
-		//set session data
-		$oUser->setNick($nick);
-		
-		if ($oUser->isRegistered()) $oUser->saveToDb($oSql);
-		
-		pageUnload();
+        if (!isset($_POST['nick'])) throw new Exception('Nem kaptam megfelelő POST adatot!');
 
-		header('Location: '.SELF);
-	
-	} catch (Exception $e) {
+        $nick = htmlspecialchars($_POST['nick']);
 
-		design_Header();
-		
-		print '
-		<div class="box">
-			<div class="top"><div class="right-corner"></div><div class="left-corner"></div></div>
-			<div class="inner-content">
-				<h2>Hiba történt!</h2><br/>
-				Hiba oka: ' . $e->getMessage() . '<br/>
-				' . BACK . '
-			</div>
-			<div class="bottom"><div class="right-corner"></div><div class="left-corner"></div></div>
-		</div>';
-			
-		design_Footer();
-	}
+        if (strlen($nick) < 3 || strlen($nick) > 50) throw new Exception('túl rövid vagy túl hosszú név (min 3, max 50 kar.)');
+
+        //set session data
+        $oUser->setNick($nick);
+
+        if ($oUser->isRegistered()) $oUser->saveToDb($oSql);
+
+        pageUnload();
+
+        header('Location: '.SELF);
+
 } 
 
 function modifyPrinter() {
 
 	//global
-	global $oUser, $oSql;
+	global $oUser, $oSql, $sso;
 	
-	try {
-		if (!isset($_POST['printer_id']) || (int)$_POST['printer_id'] == 0) throw new Exception('Nem kaptam megfelelő POST adatot!');
-		
-		$id = (int)$_POST['printer_id'];
-		
-		$data = clsPrinter::dataValidate($_POST);
+        if (!isset($_POST['printer_id']) || (int)$_POST['printer_id'] == 0) throw new Exception('Nem kaptam megfelelő POST adatot!');
 
-		$oUser->updatePrinter($oSql, $id, $data['type'], $data['colors'], $data['model'], $data['desc'], $data['loc']);
+        $id = (int)$_POST['printer_id'];
 
-		pageUnload();
+        $data = clsPrinter::dataValidate($_POST);
 
-		header('Location: '.SELF);
+        $oUser->updatePrinter($oSql, $id, $data['type'], $data['colors'], $data['model'], $data['desc'], $data['loc']);
 
-	} catch (Exception $e) {
+        pageUnload();
 
-		design_Header();
-		
-		print '
-		<div class="box">
-			<div class="top"><div class="right-corner"></div><div class="left-corner"></div></div>
-			<div class="inner-content">
-				<h2>Hiba történt!</h2><br/>
-				Hiba oka: ' . $e->getMessage() . '<br/>
-				' . BACK . '
-			</div>
-			<div class="bottom"><div class="right-corner"></div><div class="left-corner"></div></div>
-		</div>';
-			
-		design_Footer();
-	}
+        header('Location: '.SELF);
+
 } 
 
 function delPrinter() {
 
 	//global
-	global $oUser, $oSql;
+	global $oUser, $oSql, $sso;
 
 	if ((int)$_GET['id'] == 0 || $oUser->delPrinter((int)$_GET['id'], $oSql) === FALSE) {
 		//error
-		design_Header();
+		design_Header($sso->isLogin());
 		
 		print '
 		<div class="box">
@@ -307,10 +286,10 @@ function delPrinter() {
 function allDataDel() {
 
 	//global
-	global $oUser, $oSql;
+	global $oUser, $oSql, $sso;
 
 	if (!isset($_GET['sure'])) {
-		design_Header();
+		design_Header($sso->isLogin());
 		print '<div class="box">
 			<div class="top"><div class="right-corner"></div><div class="left-corner"></div></div>
 			<div class="inner-content">
@@ -333,6 +312,8 @@ function allDataDel() {
 		$st->bind_param('s', $oUser->getUid());
 		$st->execute();
 		$st->close();
+
+                $sso->logOut();
 		
 		$_SESSION = array(); //unset session variables
 
@@ -347,38 +328,21 @@ function allDataDel() {
 function requestNewAppkey() {
 	
 	//globals
-	global $oUser, $oSql;
+	global $oUser, $oSql, $sso;
 	
 	$oUser->requestAppKey();
-	
-	try {
-		$oUser->saveToDb($oSql);
-		
-		pageUnload();
-		
-		header('Location: '.SELF);
-	
-	} catch (Exception $e) {
-		design_Header();
-		
-		print '
-		<div class="box">
-			<div class="top"><div class="right-corner"></div><div class="left-corner"></div></div>
-			<div class="inner-content">
-				<h2>Hiba történt!</h2><br/>
-				Hiba oka: ' . $e->getMessage() . '<br/>
-				' . BACK . '
-			</div>
-			<div class="bottom"><div class="right-corner"></div><div class="left-corner"></div></div>
-		</div>';
-			
-		design_Footer();
-	}
 
+        $oUser->saveToDb($oSql);
+
+        pageUnload();
+
+        header('Location: '.SELF);
 }
 
 function printFaq() {
-design_Header();
+    global $sso;
+
+design_Header($sso->isLogin());
 ?>
 <div class="box">
 <div class="top"><div class="right-corner"></div><div class="left-corner"></div></div>
@@ -468,8 +432,9 @@ design_Footer();
 
 function pageUnload() {
 
-	global $oUser, $oSql;
+	global $oUser, $oSql, $sso;
 	unset( $oUser );
+        unset($sso);
 	$oSql->close();
 }
 

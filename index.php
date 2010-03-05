@@ -2,6 +2,8 @@
 require_once('logger.php');
 require_once('db.php');
 
+session_start();
+
 //set timezone (php conf error?)
 date_default_timezone_set('Europe/Berlin');
 
@@ -11,6 +13,7 @@ if (!empty($my->connect_error)) die($my->connect_error);
 
 
 $oSql->set_charset('utf8');
+
 
 //update inactive printers to off
 $q = $oSql->prepare("UPDATE `printers` SET `on` = FALSE WHERE TIMEDIFF(NOW(), `last_refreshed`) > '00:06:00'");
@@ -133,16 +136,16 @@ function cmp($a, $b) {
 }
 uasort($offline_printers, 'cmp');
 
-//set headers
-session_start();
-
 header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 header('Content-type: text/html; charset=utf-8');
 
 $root = 'http://printer.sch.bme.hu/';
 
-$loggedIn = isset($_SESSION['loginned']) && $_SESSION['loginned'] === true && isset($_SESSION['oUser']['uid']);
+//sso lib
+require_once('printprofil/open-sso.lib/open-sso.class.php');
+$sso = new OpenSSO;
+$loggedIn = $sso->isLogin();
 
 require_once('gui.php');
 
