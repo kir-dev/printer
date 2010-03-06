@@ -21,6 +21,9 @@ if ( ! ($sso->isLogin()))
 
 header('Content-type: text/html; charset=utf-8');
 
+//set timezone (php conf error?)
+date_default_timezone_set('Europe/Berlin');
+
 //set mysql object
 $oSql = new mysqli($host, $user, $pass, $db);
 

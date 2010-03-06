@@ -5,7 +5,14 @@
 	require_once('printprofil/funct.php');
 	header('Content-type: text/html; charset=utf-8');
 
-	design_Header();
+        //set timezone (php conf error?)
+        date_default_timezone_set('Europe/Berlin');
+
+        require_once 'db.php';
+        require_once('printprofil/open-sso.lib/open-sso.class.php');
+        $sso = new openSSO;
+
+	design_Header($sso->isLogin());
 ?>
 		
 		<div class="box">
