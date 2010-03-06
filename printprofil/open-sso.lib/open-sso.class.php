@@ -25,10 +25,9 @@ final class openSSO extends openSSO_Abstract
      * connect to db
      */
     function __construct() {
+        global $host, $user, $pass, $db;
 
         parent::__construct();
-
-        global $host, $user, $pass, $db;
 
         $dsn = 'mysql:dbname='.$db.';host=' . $host;
 

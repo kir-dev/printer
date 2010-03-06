@@ -157,11 +157,10 @@ abstract class openSSO_Abstract implements openSSO_API
 	 */
 	
 	
-	
 	/**
-	 * PHP4 constructor
+	 * PHP5 constructor.
 	 */
-	function openSSO_Abstract()
+	function __construct()
 	{
 		// Load config
 		$this->_loadConfig();
@@ -172,10 +171,10 @@ abstract class openSSO_Abstract implements openSSO_API
 			$this->hookError();
 			return;
 		}
-		
+
 		// Get HTTPS protocol
 		if($this->conf['ssl'] AND $this->isLogin() === TRUE) $this->https();
-			
+
 		// Set the user's data
 		$this->userName = $this->server($this->conf['userName']);
 		if(is_array($this->conf['user']))
@@ -185,11 +184,11 @@ abstract class openSSO_Abstract implements openSSO_API
 				if($this->server($value) !== FALSE) $this->ssoUser['sso_'.$key] = $this->server($value);
 			}
 		}
-		
+
 		// Clean and convert user's special data
 		$this->userGroups = $this->_setGroups();
 		$this->userVirid = $this->_setVirid();
-		
+
 		if($this->conf['shibSp'])
 		{
 			// If the user logged in, but the user name not setted OR the shib session is inactive: logout
@@ -210,37 +209,26 @@ abstract class openSSO_Abstract implements openSSO_API
 		{
 			// Set idpCookie
 			$this->idpCookie = $this->cookie($this->conf['idpCookie']);
-				
+
 			// If the session's user name not equal with the server's user name: reset user's data
 			if($this->getSessionData('sso_user') !== $this->userName AND $this->isLogin() === TRUE)
 			{
 				$this->_logout();
 				$this->_login();
 			}
-			
+
 			// If the user logged in, but logged out in idp: logout
 			if(empty($this->idpCookie) AND $this->isLogin() === TRUE)
 			{
 				$this->setSessionData('sso_login_state', TRUE);
 				$this->logOut();
 			}
-			
+
 			// If the user logged in, but their data in the server not setted: redirect to trigger
 			if($this->isLogin() === TRUE AND !empty($this->idpCookie) AND empty($this->userName))
 				$this->_redirect($this->_path2url($this->conf['trigger']));
-		
+
 		}
-		
-	}
-	
-	
-	/**
-	 * PHP5 constructor.
-	 * Use the PHP4 constructor.
-	 */
-	function __construct()
-	{
-		$this->openSSO_Abstract();
 	}
 	
 	
