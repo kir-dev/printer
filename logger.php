@@ -9,7 +9,8 @@ set_error_handler(log_handler);
 
 function log_handler ( $errno, $errstr,  $errfile, $errline, $errcontext ) {
     //$context = var_export($errcontext, TRUE);
-    log_error_ereg("errno:$errno ($errstr) file:$errfile, line:$errline\n");
+    $page = isset($_GET['p']) ? $_GET['p'] : 'indexpage';
+    log_error_ereg("errno:$errno ($errstr) file:$errfile, line:$errline\n, page:$page");
 
     /* Don't execute PHP internal error handler */
     return true;

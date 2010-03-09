@@ -231,7 +231,8 @@ function changeNick() {
         //set session data
         $oUser->setNick($nick);
 
-        if ($oUser->isRegistered()) $oUser->saveToDb($oSql);
+        /*if ($oUser->isRegistered()) */
+        $oUser->saveToDb($oSql);
 
         pageUnload();
 
@@ -438,7 +439,7 @@ function pageUnload() {
 	global $oUser, $oSql, $sso;
 	unset( $oUser );
         unset($sso);
-	$oSql->close();
+	//$oSql->close();
 }
 
 ?>
