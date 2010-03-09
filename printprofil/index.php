@@ -439,6 +439,7 @@ function pageUnload() {
 	global $oUser, $oSql, $sso;
 	unset( $oUser );
         unset($sso);
+        unset($oSql);
 	//$oSql->close();
 }
 
