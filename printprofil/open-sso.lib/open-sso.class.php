@@ -89,7 +89,10 @@ final class openSSO extends openSSO_Abstract
 
             try {
                 $sth = $this->conn->prepare($sql);
-                $sth->execute(array(':uid' => $data['user_name'], ':nick' => $data['sso_nickname'], ':email' => $data['sso_email']));
+
+                $nickname = isset($data['sso_nickname']) ? $data['sso_nickname'] : $data['user_name'];
+
+                $sth->execute(array(':uid' => $data['user_name'], ':nick' => $nickname, ':email' => $data['sso_email']));
                 $sth->fetchAll();
             } catch (PDOException $e) {
                 die('unable to insert user in the db');
