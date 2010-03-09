@@ -307,13 +307,14 @@ function allDataDel() {
 		design_Footer();
 		
 	} else {
+                $uid = $oUser->getUid();
 		$st = $oSql->prepare("DELETE FROM `printers` where `uid` = ?");
-		$st->bind_param('s', $oUser->getUid());
+		$st->bind_param('s', $uid);
 		$st->execute();
 		$st->close();
 		
 		$st = $oSql->prepare("DELETE FROM `users` where `uid` = ?");
-		$st->bind_param('s', $oUser->getUid());
+		$st->bind_param('s', $uid);
 		$st->execute();
 		$st->close();
 
