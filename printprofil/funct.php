@@ -54,12 +54,15 @@ function design_Footer() {
                 <div style="text-align: center; width: 509px; float: left;">
                     <?php
                     if (strpos($_SERVER['SCRIPT_NAME'], 'disclaimer.php') === false)
-                            print '<a href="../disclaimer.php">Felhasználási feltételek</a><br/>';
+                            print '<a href="../disclaimer.php">Felhasználási feltételek</a>';
                     ?>
+                    <br/>
                     printer.sch.bme.hu | © <?php print date('Y');?> <a href="http://kir-dev.sch.bme.hu">Kir-Dev</a> | design by kir-dev team
                 </div>
-                <div style="float: right; margin-right: 8px;"><a href="http://kir-dev.sch.bme.hu"><img src="/res/img/banners/kirdev.png" alt="Kir-Dev web developer team" border="0" height="50" /></a></div>
-
+                <div style="float: right; margin-right: 8px; margin-top: -35px;">
+                    <a href="http://www.sch.bme.hu"><img src="/res/img/banners/schonherz.jpg" alt="Schönherz Zoltán Kollégium" border="0" height="50" /></a>
+                    <a href="http://kir-dev.sch.bme.hu"><img src="/res/img/banners/kirdev.png" alt="Kir-Dev web developer team" border="0" height="50" /></a>
+                </div>
             </div>
         </div>
     </body>

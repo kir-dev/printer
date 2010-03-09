@@ -64,17 +64,19 @@ final class clsUser {
 			$stUpd->bind_param('ssss', $this->email, $this->nick, $this->appkey, $this->uid);
 			$stUpd->execute();
 			$stUpd->close();
-		} else { //insert
+		} /*else { //insert
 			$stUserIns = $oSql->prepare("INSERT INTO `users` (`uid`, `email`, `nick`, `appkey`) VALUES(?, ?, ?, ?)");
 			$stUserIns->bind_param('ssss', $this->uid, $this->email, $this->nick, $this->appkey);
 			$stUserIns->execute();
 			if ($stUserIns->affected_rows != 1) throw new Exception("Adatbázishiba! A felhasználó mentése sikertelen!");
 
 			$stUserIns->close();
-		}
+		}*/
 
 		$this->inDb = TRUE;
 	}
+
+        //this functions should put in clsPrinter or clsPrinterCollection
 	
 	private function getPrinterIndexFromId($iPrinterId) {
 		//search printer by id
