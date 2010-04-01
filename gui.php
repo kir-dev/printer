@@ -86,7 +86,12 @@ print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://ww
                 <div class="box">
                     <div class="top"><div class="right-corner"></div><div class="left-corner"></div></div>
                     <div class="inner-content">
-
+                        <?php
+                        if (!$loggedIn)
+                            print '<div style="font-style: italic;
+                                                margin-bottom: 6px;
+                                                text-align: center">Részletesebb információkhoz jelentkezz be!</div>';
+                        ?>
                         <h2>Aktív nyomtatók</h2>
                         <p>
 					@<?php print date('Y.m.d. H:i'); ?>
