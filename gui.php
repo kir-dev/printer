@@ -1,4 +1,41 @@
 <?php
+/**
+ * egy tömbben lévő nyomtatókhoz generál táblázatot
+ * kód-duplikációt elkerülendő
+ *
+ * @param array $printers
+ * @param string $TRstyle
+ */
+function tableGen($printers, $TRstyle = "") {
+    global $loggedIn;
+
+    print '<table style="width: 100%;">
+        <tr><th>Név</th><th>Szoba</th><th>Nyomtató</th>';
+
+    /* fuck hérosz: kereskedelmi para*/
+    if ($loggedIn) print '<th>Info</th>';
+
+    print '<th>Frissítve</th></tr>';
+
+    foreach ($printers as $printer) {
+
+        print '
+            <tr style="' . $TRstyle . '">
+                <td><a href="https://profile.sch.bme.hu/profile/show/uid/' . $printer['uid'] . '/">' . $printer['nick'] . '</a></td>
+                <td>' . $printer['loc'] . '</td>
+                <td><div style="width: 150px; overflow: hidden;">' . $printer['model'] . '</div><br /><i>Típus</i>: ' . $type . '<br /><i>Nyomtat</i>: ';
+                print $printer['colors'].'
+                </td>';
+                if ($loggedIn)
+                    print '<td><div style="width: 400px; overflow: hidden;">' . $printer['desc'] . '</div></td>';
+
+                print '<td>' . $printer['last_refreshed'] . '</td>
+            </tr>';
+    }
+
+    print '</table>';
+}
+
 if (substr($_SERVER["SCRIPT_NAME"], -10) != '/index.php') die('Hiba: a fájl direkt hívása nem engedélyezett');
 
 print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
@@ -19,6 +56,7 @@ print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://ww
         <!-- navbar config and call -->
         <script type="text/javascript">
             //<!--
+            /*<?php print_r($loggedIn); ?>*/
             var navbarConf = {
                 loginLink: 'https://printer.sch.bme.hu/printprofil/?action=login',
                 logoutLink: 'https://printer.sch.bme.hu/printprofil/?action=logout',
@@ -53,25 +91,8 @@ print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://ww
                         <p>
 					@<?php print date('Y.m.d. H:i'); ?>
                         </p>
-                        <table style="width: 100%;">
-                            <tr><th>Név</th><th>Szoba</th><th>Nyomtató</th><th>Info</th><th>Frissítve</th></tr>
 
-                            <?php
-                            foreach ($printers as $printer) {
-
-                                print '
-                                    <tr>
-                                        <td><a href="https://profile.sch.bme.hu/profile/show/uid/' . $printer['uid'] . '/">' . $printer['nick'] . '</a></td>
-                                        <td>' . $printer['loc'] . '</td>
-                                        <td><div style="width: 150px; overflow: hidden;">' . $printer['model'] . '</div><br /><i>Típus</i>: ' . $type . '<br /><i>Nyomtat</i>: ';
-                                        print $printer['colors'].'
-                                        </td>
-                                        <td><div style="width: 400px; overflow: hidden;">' . $printer['desc'] . '</div></td>
-                                        <td>' . $printer['last_refreshed'] . '</td>
-                                    </tr>';
-                            }
-                            ?>
-                        </table>
+                        <?php tableGen($printers); ?>
 
                     </div>
                     <div class="bottom"><div class="right-corner"></div><div class="left-corner"></div></div>
@@ -84,26 +105,7 @@ print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://ww
                         <h2>Inaktív nyomtatók</h2>
                         <b>Figyelem: </b> ez a lista azokat a nyomtatókat tartalmazza, amik a rendszerben vannak (és az elmúlt 3 hónapban aktívak voltak), de <b><u>most nem lehet náluk nyomtatni</u></b>!
                         <br/><br/>
-                        <table style="width: 100%;">
-                            <tr><th>Név</th><th>Szoba</th><th>Nyomtató</th><th>Info</th><th>Frissítve</th></tr>
-
-                            <?php
-                            foreach ($offline_printers as $printer) {
-
-                                print '
-                                <tr style="color: grey">
-                                    <td><a href="https://profile.sch.bme.hu/profile/show/uid/' . $printer['uid'] . '/">' . $printer['nick'] . '</a></td>
-                                    <td>' . $printer['loc'] . '</td>
-                                    <td><div style="width: 150px; overflow: hidden;">' . $printer['model'] . '</div><br /><i>Típus</i>: ' . $type . '<br /><i>Nyomtat</i>: ';
-                                    print $printer['colors'].'
-                                    </td>
-                                    <td><div style="width: 400px; overflow: hidden;">' . $printer['desc'] . '</div></td>
-                                    <td>' . $printer['last_refreshed'] . '</td>
-                                </tr>';
-                            }
-                            ?>
-                        </table>
-
+                        <?php tableGen($offline_printers, "color: grey"); ?>
                     </div>
                     <div class="bottom"><div class="right-corner"></div><div class="left-corner"></div></div>
                 </div>

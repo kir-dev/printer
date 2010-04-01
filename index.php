@@ -2,7 +2,13 @@
 require_once('logger.php');
 require_once('db.php');
 
+//sso lib
+require_once('printprofil/open-sso.lib/open-sso.class.php');
+
 session_start();
+
+$sso = new OpenSSO;
+$loggedIn = $sso->isLogin();
 
 //set timezone (php conf error?)
 date_default_timezone_set('Europe/Berlin');
@@ -106,7 +112,7 @@ while ( $q->fetch() ) {
     $printer = array("type" => $type,
         "colors" => $str_colors,
         "model" => $model,
-        "desc" => nl2br($desc),
+        "desc" => ($loggedIn ? nl2br($desc) : " - "), //ha be van jelentkezve megjelenítjük az infókat
         "loc" => $loc,
 	"last_refreshed_ts" => $last_refreshed,
         "last_refreshed" => (int)($last_refreshed / 60)." perce",
@@ -141,11 +147,6 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 header('Content-type: text/html; charset=utf-8');
 
 $root = 'http://printer.sch.bme.hu/';
-
-//sso lib
-require_once('printprofil/open-sso.lib/open-sso.class.php');
-$sso = new OpenSSO;
-$loggedIn = $sso->isLogin();
 
 require_once('gui.php');
 
