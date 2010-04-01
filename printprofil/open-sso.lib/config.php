@@ -46,7 +46,7 @@ $config['shibSp'] = TRUE;
 | Usage: Shibboleth
 |
 */
-$config['shibIdpLogout'] = TRUE;
+$config['shibIdpLogout'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
