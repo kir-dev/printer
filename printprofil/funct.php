@@ -35,6 +35,7 @@ function design_Header($loggedIn = false) {
         </script>
         <div id="page">
             <div id="navbar_container"></div>
+	    <a href="<?php print ROOT; ?>" class="header-link"></a>
             <div id="header">
                 <ul id="menu">
                     <li>

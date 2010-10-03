@@ -71,6 +71,7 @@ print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://ww
         </script>
         <div id="page">
             <div id="navbar_container"></div>
+	    <a href="<?php print $root; ?>" class="header-link"></a>
             <div id="header">
                 <?php
                 if ($loggedIn)

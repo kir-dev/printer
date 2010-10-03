@@ -152,3 +152,11 @@ input[type="submit"] {
 	vertical-align: middle;
 	clear: both;
 }
+
+.header-link {
+	position: absolute;
+	top: 37px;
+	left: auto;
+	width: 710px;
+	height: 80px;
+}
