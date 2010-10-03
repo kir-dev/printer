@@ -108,7 +108,7 @@ print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://ww
                     <div class="inner-content">
 
                         <h2>Inaktív nyomtatók</h2>
-                        <b>Figyelem: </b> ez a lista azokat a nyomtatókat tartalmazza, amik a rendszerben vannak (és az elmúlt 3 hónapban aktívak voltak), de <b><u>most nem lehet náluk nyomtatni</u></b>!
+                        <b>Figyelem: </b> ez a lista azokat a nyomtatókat tartalmazza, amik a rendszerben vannak (és az elmúlt 1 hónapban aktívak voltak), de <b><u>most nem lehet náluk nyomtatni</u></b>!
                         <br/><br/>
                         <?php tableGen($offline_printers, "color: grey"); ?>
                     </div>
