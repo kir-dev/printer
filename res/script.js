@@ -24,6 +24,7 @@ function checkForm(oForm) {
 	
 	//get colors are selected
 	var selected_colors = false;
+	i=0;
 	while (i < oForm.elements['colors[]'].length && !oForm.elements['colors[]'][i].checked) ++i;
 	if (i < oForm.elements['colors[]'].length) selected_colors = true;
 	
