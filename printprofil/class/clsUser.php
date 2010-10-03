@@ -108,7 +108,7 @@ final class clsUser {
 		
 		$this->aPrinters[$index]->updateData($sType, $sColors, $sModel, $sDesc, $sLoc);
 
-		$this->aPrinters[$index]->saveToDb(&$oSql);
+		$this->aPrinters[$index]->saveToDb($oSql);
 	}
 
 	public function isRegistered() { return $this->inDb; }

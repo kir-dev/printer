@@ -5,7 +5,7 @@ error_reporting(0);
 
 $log_file = $_SERVER['DOCUMENT_ROOT']."/log/log.txt";
 
-set_error_handler(log_handler);
+set_error_handler('log_handler');
 
 function log_handler ( $errno, $errstr,  $errfile, $errline, $errcontext ) {
     //$context = var_export($errcontext, TRUE);
