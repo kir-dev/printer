@@ -39,8 +39,8 @@ $q = $oSql->prepare("SELECT printers.type,
                     users.nick
                     FROM printers
                     INNER JOIN users ON users.uid = printers.uid " .
-                    // ...only newer than 3 months (90 * 24 hours)
-                    "WHERE UNIX_TIMESTAMP(printers.last_refreshed) > UNIX_TIMESTAMP(CURRENT_TIMESTAMP())-90*24*60*60");
+                    // ...only newer than 1 months (30 * 24 hours)
+                    "WHERE UNIX_TIMESTAMP(printers.last_refreshed) > UNIX_TIMESTAMP(CURRENT_TIMESTAMP())-30*24*60*60");
 
 $q->execute();
 $q->bind_result($type, $colors, $model, $desc, $loc, $last_refreshed, $pr_on, $uid, $nick);
