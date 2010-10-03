@@ -98,15 +98,15 @@ function indexPage() {
 				<form action="'.SELF.'?p=changeNick" method="post">
 				<p><label style="display: block; float: left; text-align: right;">Nickname: </label><input type="text" name="nick" value="'.$oUser->getNick().'" maxlength="50" /> 
 											<input type="submit" value="Mentés" /></p>
-				<p><label style="display: block; float: left; text-align: right;">Titkos appkey: </label><span>';
+				<p><label style="display: block; float: left; text-align: right;">Titkos appkey: </label> ';
 				
 				if ($oUser->getAppkey() == "")
 					print 'Adj hozzá egy nyomtatót, hogy kapj!';
 				else
-					print $oUser->getAppkey().'&nbsp;&nbsp; <a href="'.SELF.'?p=requestNewAppkey">[új kérése]</a><br/>';
+					print '<span style="margin-right: 5px;">' . $oUser->getAppkey().'</span><a href="'.SELF.'?p=requestNewAppkey">[új kérése]</a><br/>';
 				
 				print '
-				</span></p>
+				</p>
 				</form>
 			
 			</div>
