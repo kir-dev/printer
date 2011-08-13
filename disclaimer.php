@@ -1,16 +1,18 @@
 <?php
-	define('ROOT', 'http://printer.sch.bme.hu/');
-	//constants.php létrehozása
+        require_once('logger.php');
+
 	session_start();
+
+        require_once 'db.php'; //kell az SSO lib miatt
+        require_once(SSO_CLASS);
 	require_once('printprofil/funct.php');
+
 	header('Content-type: text/html; charset=utf-8');
 
         //set timezone (php conf error?)
         date_default_timezone_set('Europe/Berlin');
 
-        require_once 'db.php';
-        require_once('printprofil/open-sso.lib/open-sso.class.php');
-        $sso = new openSSO;
+        $sso = new openSSO; //kell, hogy konzisztens maradjon a bejelentkezés tényének kijelzése
 
 	design_Header($sso->isLogin());
 ?>

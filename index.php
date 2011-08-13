@@ -2,8 +2,7 @@
 require_once('logger.php');
 require_once('db.php');
 
-//sso lib
-require_once('printprofil/open-sso.lib/open-sso.class.php');
+require_once(SSO_CLASS);
 
 session_start();
 

@@ -1,11 +1,14 @@
 <?php
 
 //turn off all error reporting (logging in to a file: logger.php)
-error_reporting(0);
-
-$log_file = $_SERVER['DOCUMENT_ROOT']."/log/log.txt";
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
 
 set_error_handler('log_handler');
+
+require_once('constants.php');
+
+$log_file = DOC_ROOT."log/log.txt";
 
 function log_handler ( $errno, $errstr,  $errfile, $errline, $errcontext ) {
     //$context = var_export($errcontext, TRUE);

@@ -8,12 +8,8 @@ require_once('../db.php');
 require_once('class/clsUser.php');
 require_once('class/clsPrinter.php');
 require_once('funct.php');
-require_once('open-sso.lib/open-sso.class.php');
 
-//to constants.php
-define('ROOT', 'http://printer.sch.bme.hu/');
-define('SELF', $_SERVER['PHP_SELF']);
-define('BACK', '<a href="#" onclick="history.back();">vissza</a>');
+require_once(SSO_CLASS);
 
 session_cache_expire(60); //60 minutes
 session_start();
