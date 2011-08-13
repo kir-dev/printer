@@ -1,8 +1,8 @@
 <?php
-require_once('../logger.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php');
 
 // Included vars: $host, $user, $pass, $db
-require_once('../db.php');
+require_once(DOC_ROOT . 'db.php');
 
 // include classes
 require_once('class/clsUser.php');
