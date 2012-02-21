@@ -202,7 +202,8 @@ function addPrinter() {
         $data = clsPrinter::dataValidate($_POST);
 
         //if not registered yet: request appkey and save user
-        if (is_null($oUser->getAppkey())) {
+	$appkey = $oUser->getAppkey();
+        if (empty($appkey)) {
                 $oUser->requestAppKey();
                 $oUser->saveToDb($oSql);
         }
