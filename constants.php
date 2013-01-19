@@ -13,6 +13,11 @@ define('BACK', '<a href="#" onclick="history.back();">vissza</a>');
 if (IS_TST_MODE) {
     define('SSO_CLASS', DOC_ROOT . 'printprofil/class/clsDummySSO.php');
 } else {
+    if ($_SERVER['HTTP_HOST'] != 'printer.sch.bme.hu') { // http://printer/ esetén
+        header('Location: ' . ROOT);
+        exit;
+    }
+
     define('SSO_CLASS', DOC_ROOT . 'printprofil/open-sso.lib/open-sso.class.php');
 }
 
